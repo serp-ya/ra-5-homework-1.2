@@ -4,13 +4,15 @@ const dataSourceUrl = 'https://neto-api.herokuapp.com/etsy';
 function Listing(props) {
   
   const itemsList = props.items.map(item => {
+    const currencyIcons = {
+      'USD': '$',
+      'EUR': '€'
+    };
     let currentPriceFormated;
     let quantityLevel;
 
-    if (item.currency_code === 'USD') {
-      currentPriceFormated = `$${item.price}`;
-    } else if (item.currency_code === 'EUR') {
-      currentPriceFormated = `€${item.price}`;
+    if (currencyIcons[item.currency_code]) {
+      currentPriceFormated = `${currencyIcons[item.currency_code]}${item.price}`;
     } else {
       currentPriceFormated = `${item.price} ${item.currency_code}`;
     }
@@ -33,7 +35,7 @@ function Listing(props) {
         <div className="item-details">
           <p className="item-title">{turncateString(item.title, 50)}</p>
           <p className="item-price">{currentPriceFormated}</p>
-          <p className={`item-quantity ${quantityLevel}`}>{`${item.quantity} left`}</p>
+          <p className={`item-quantity ${quantityLevel}`}>${item.quantity} left</p>
         </div>
       </div>
     );
