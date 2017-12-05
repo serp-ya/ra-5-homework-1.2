@@ -8,14 +8,14 @@ const typesOfMessagesComponents = {
 function MessageHistory(props) {
   const messagesList = props.list;
 
-  if (!messagesList && !Array.isArray(messagesList) && !messagesList.length) {
+  if (!Array.isArray(messagesList) || !messagesList.length) {
     return null;
   }
 
-  let messagesElements = messagesList.map((message, index) => {
+  let messagesElements = messagesList.map((message) => {
     let MessageComponent = typesOfMessagesComponents[message.type];
 
-    return (MessageComponent ? (<li key={index}><MessageComponent from={message.from} message={message} /></li>) : null);
+    return (MessageComponent ? (<MessageComponent key={message.id} from={message.from} message={message} />) : null);
   });
   
   return <ul>{messagesElements}</ul>;
